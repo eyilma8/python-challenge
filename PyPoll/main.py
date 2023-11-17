@@ -19,27 +19,25 @@ candidatesUnique= list()
 for i in range(TotalVotesCount-1):
     candidate=csvfilelist[i][2]
     candidatelist.append(candidate)
-r=0
 p=0
 for j in range (TotalVotesCount-1):
-    if  csvfilelist[j][2]==csvfilelist[j+1][2]:
-        p=p+1
-    else:
-        r=r+1
-        candidatesUnique.append(csvfilelist[j][2])
-candidate1=candidatesUnique[1]
-candidate2=candidatesUnique[2]
-candidate3=candidatesUnique[3]
-#Count per candidate - assumes number of candidates are know
+   if  csvfilelist[j][2]!=csvfilelist[j+1][2]:
+      candidatesUnique.append(csvfilelist[j][2])
+else:
+     
+    candidate1=candidatesUnique[1]
+    candidate2=candidatesUnique[2]
+    candidate3=candidatesUnique[3]
+#Count per candidate - assumes number of candidates are know as 3
 count1=0
 count2=0
 count3=0
-for j in range(TotalVotesCount):
-    if candidate1==candidatelist[j][0]:
+for i in range(TotalVotesCount):
+    if candidate1==candidatelist:
         count1=count1+1
-    elif candidate2==candidatelist[j][0]:
+    elif candidate2==candidatelist:
       count2=count2+1
-    elif candidate3==candidatelist[j][0]:
+    elif candidate3==candidatelist:
         count3=count3+1
 #percentage Candidate score
 Percentage1=count1/TotalVotesCount
@@ -54,9 +52,8 @@ elif WinnerCount==count2:
 else:
     Winner=candidatelist[3]
 # Report
-print(candidatelist)
-print("              Election Results                ")
 
+print("              Election Results                ")
 print("----------------------------------------------")
 print("Total Votes :  ", TotalVotesCount)
 print("----------------------------------------------")
@@ -65,3 +62,4 @@ print(candidatelist[2],Percentage2,count2 )
 print(candidatelist[3],Percentage3,count3)
 print("----------------------------------------------")
 print("Winner: ",Winner)
+print("----------------------------------------------")
