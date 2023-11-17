@@ -1,7 +1,6 @@
-
 import os
 import csv
-file_path = os.path.join("PyPoll","Resources","election_data.csv")
+file_path = os.path.join("Resources","election_data.csv")
 
 with open(file_path, newline='') as f:
     csvfile = csv.reader(f, delimiter=",")
@@ -11,61 +10,41 @@ with open(file_path, newline='') as f:
     csvfilelist=list(csvfile)
     TotalVotesCount = len(csvfilelist)
     
-#name of candidates add them in fourth column
-
+#Create a candidate list
 candidatelist=list()
-candidates = list()
-candidatesUnique= list()
-count=list()
-p=0
-r=0
-for i in range (TotalVotesCount-1):
-      if  (csvfilelist[i][2])!=(csvfilelist[i+1][2]):
-          candidate1=str(csvfilelist[i][2])
-          candidates.append(candidate1)
+for i in range(TotalVotesCount-1):
+        candidate=csvfilelist[i][2]
+        if csvfilelist[i][2]!=csvfilelist[i+1][2] and candidate not in candidatelist:
+            candidatelist.append(csvfilelist[i][2])
 
-candidate1=candidates[0]
-candidate2=candidates[1]
-candidate3=candidates[2]
-count1=0
-count2=0
-count3=0
+#Vote count per each candidate calculated with double loop for candidates and the entire list for count
+votecount = list()
+percentagevote = list()
+candidatecount = len(candidatelist)
+for i in range(candidatecount):
+        candidate =candidatelist[i]
+        count =0
+        for j in range(TotalVotesCount-1):
+            if csvfilelist[j][2]==candidate:
+              count=count+1
+        votecount.append(count)  
+        percentagevote.append(count/TotalVotesCount)
 
-#Count per candidate - assumes number of candidates are know as 3
-for i in range(TotalVotesCount):
-    if candidate1==csvfilelist[i][2]:
-        count1=count1+1
-
-for i in range(TotalVotesCount):
-    if candidate2==csvfilelist[i][2]:
-        count2=count2+1
-
-for i in range(TotalVotesCount):
-    if candidate3==csvfilelist[i][2]:
-        count3=count3+1
-#Percentage of counts for each candidate converted to a percentage and rounded to two decimal place
-Percentage1 = round((count1/TotalVotesCount)*100,2)
-Percentage2 = round((count2/TotalVotesCount)*100,2)
-Percentage3 = round((count3/TotalVotesCount)*100,2)
-
-WinnerCount = max(count1,count2,count3)
-
-if WinnerCount==count1:
-    Winner = candidate1
-elif WinnerCount==count2:
-    Winner = candidate2
-elif WinnerCount==count3:
-    Winner=candidate3
+#Winner identification
+Winnercount = max(votecount)
+for i in range(candidatecount):
+    if Winnercount == votecount[i]:
+         Winner = candidatelist[i]
+         
 # Report
 
 print("Election Results                ")
 print("----------------------------------------------")
 print("Total Votes :  ", TotalVotesCount)
 print("----------------------------------------------")
-print(candidate1,":" ,Percentage1,"%","(",count1,")" )
-print(candidate2,":" ,Percentage2,"%","(",count2,")" )
-print(candidate3,":" ,Percentage3,"%","(",count3,")" )
+for i in range(candidatecount):
+    print(candidatelist[i],":", f'{(percentagevote[i]*100):.2f}%', f'({votecount[i]})')
 print("-------------------------------------------")
-print("Winner :", Winner)
+print("Winner:", Winner)
 
 print("-------------------------------------------")
