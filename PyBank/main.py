@@ -1,12 +1,13 @@
 import os
 import csv
-file_path=os.path.join("PyBank","Resources","budget_data.csv")
+file_path=os.path.join("Resources","budget_data.csv")
 with open(file_path) as f:
    csvfile=csv.reader(f,delimiter=",")
    next(csvfile)
    csvfilelist=list(csvfile)
    NumberofMonths=len(csvfilelist)
 TotalProfitLoss =list()
+
 #Identify monthly Prof/Loss and sum to get net prof/Loss, append values of diffenece in consecuitive values in a list for later analysis
 Difference = list()
 Increases=list()
@@ -15,6 +16,7 @@ for i in range(NumberofMonths-1):
     TotalProfitLoss.append(int(csvfilelist[i][1]))
     NetProfLoss=sum(TotalProfitLoss)
     Difference.append(int(csvfilelist[i][1])-int(csvfilelist[i+1][1]))
+
 #Maximum and Minimum value of changes as calculated above as difference of consequitive entries         
 GreatestIncrease =max(Difference)
 GreatesDecrease = min(Difference)
@@ -41,3 +43,18 @@ print("Greatest Increase in profit: ", (csvfilelist[c][0]),"($",GreatestIncrease
 print("Greatest Decrease in Profit:",  (csvfilelist[d][0]),"($",GreatesDecrease,")")
 
 print("----------------------------------------")
+
+# Reporting to text file ("PyPoll, Text_Report")
+
+Text_Report = os.path.join("PyPoll")
+with open("Text_Report.txt", "w") as f:
+
+   print("Financial Analysis          ",file=f)
+   print("----------------------------------------",file=f)
+   print("Total Months :",NumberofMonths,file=f)
+   print("Total  :","$",NetProfLoss,file=f)
+   print("Average Change :","$",AverageChange,file=f)
+   print("Greatest Increase in profit: ", (csvfilelist[c][0]),"($",GreatestIncrease,")",file=f)
+   print("Greatest Decrease in Profit:",  (csvfilelist[d][0]),"($",GreatesDecrease,")",file=f)
+
+   print("----------------------------------------",file=f)

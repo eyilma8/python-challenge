@@ -1,6 +1,6 @@
 import os
 import csv
-file_path = os.path.join("Resources","election_data.csv")
+file_path = os.path.join("PyPoll","Resources","election_data.csv")
 
 with open(file_path, newline='') as f:
     csvfile = csv.reader(f, delimiter=",")
@@ -48,3 +48,21 @@ print("-------------------------------------------")
 print("Winner:", Winner)
 
 print("-------------------------------------------")
+
+# Reporting to text file ("PyPoll, Text_Report")
+Text_Report = os.path.join("PyPoll","Analysis","Text_Report.txt")
+with open("Text_Report.txt", "w") as f:
+
+    print("Election Results                ",file=f)
+    print("--------------------------------------------",file=f)
+
+    print("Total Votes :  ", TotalVotesCount,file=f)
+
+    print("--------------------------------------------",file=f)
+
+    for i in range(candidatecount):
+        print(candidatelist[i],":", f'{(percentagevote[i]*100):.2f}%', f'({votecount[i]})',file=f)
+    print("-------------------------------------------",file=f)
+    print("Winner:", Winner,file=f)
+
+    print("-------------------------------------------", file=f)
