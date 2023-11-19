@@ -44,10 +44,10 @@ print("Greatest Decrease in Profit:",  (csvfilelist[d][0]),"($",GreatesDecrease,
 
 print("----------------------------------------")
 
-# Reporting to text file ("PyPoll, Text_Report")
+# Reporting to text file ("PyBank, Text_Report")
 
-Text_Report = os.path.join("PyPoll")
-with open("Text_Report.txt", "w") as f:
+Text_Report = os.path.join("Analysis","Text_Report.txt")
+with open(Text_Report, "w") as f:
 
    print("Financial Analysis          ",file=f)
    print("----------------------------------------",file=f)
